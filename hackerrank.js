@@ -74,28 +74,6 @@ Sample Output
 
 "use strict";
 
-const fs = require("fs");
-
-process.stdin.resume();
-process.stdin.setEncoding("utf-8");
-
-let inputString = "";
-let currentLine = 0;
-
-process.stdin.on("data", function (inputStdin) {
-  inputString += inputStdin;
-});
-
-process.stdin.on("end", function () {
-  inputString = inputString.split("\n");
-
-  main();
-});
-
-function readLine() {
-  return inputString[currentLine++];
-}
-
 /*
  * Complete the 'hourglassSum' function below.
  *
@@ -122,21 +100,64 @@ function hourglassSum(arr) {
   return Math.max(...summArr);
 }
 
-function main() {
-  const ws = fs.createWriteStream(process.env.OUTPUT_PATH);
+// //////////////////////////////////////////////////////
+/*
+Given a square matrix, calculate the absolute difference between the sums of its diagonals.
 
-  let arr = Array(6);
+For example, the square matrix  is shown below:
 
-  for (let i = 0; i < 6; i++) {
-    arr[i] = readLine()
-      .replace(/\s+$/g, "")
-      .split(" ")
-      .map((arrTemp) => parseInt(arrTemp, 10));
+1 2 3
+4 5 6
+9 8 9  
+The left-to-right diagonal = . The right to left diagonal = . Their absolute difference is .
+
+Function description
+
+Complete the  function in the editor below.
+
+diagonalDifference takes the following parameter:
+
+int arr[n][m]: an array of integers
+Return
+
+int: the absolute diagonal difference
+Input Format
+
+The first line contains a single integer, , the number of rows and columns in the square matrix .
+Each of the next  lines describes a row, , and consists of  space-separated integers .
+
+Constraints
+
+Output Format
+
+Return the absolute difference between the sums of the matrix's two diagonals as a single integer.
+
+Sample Input
+
+3
+11 2 4
+4 5 6
+10 8 -12
+Sample Output
+
+15
+*/
+
+function diagonalDifference(arr) {
+  // Write your code here
+  let firstDiagonalSumm = 0;
+  let secondDiagonalSumm = 0;
+  let j = 0;
+
+  for (let i = 0; i < arr.length; i++) {
+    firstDiagonalSumm += arr[i][j];
+    j++;
   }
-
-  const result = hourglassSum(arr);
-
-  ws.write(result + "\n");
-
-  ws.end();
+  j = 0;
+  for (let i = arr.length - 1; i >= 0; i--) {
+    secondDiagonalSumm += arr[i][j];
+    j++;
+  }
+  const INTEGER = Math.abs(firstDiagonalSumm - secondDiagonalSumm);
+  return INTEGER;
 }
